@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -228,6 +228,16 @@
   .p-more { margin-top: 1.1rem; font-size: .78rem; color: var(--gold); letter-spacing: .12em; text-transform: uppercase; }
   .empty { display: none; padding: 3rem; text-align: center; color: var(--text-dim); border: 1px dashed var(--line-strong); }
 
+  .p-img { margin: -1.8rem -1.8rem 1.2rem; aspect-ratio: 16/8; overflow: hidden; background: var(--surface2);
+    border-bottom: 1px solid var(--line); position: relative; }
+  .p-img img { width: 100%; height: 100%; object-fit: cover; object-position: top center; transition: transform .6s ease; display: block; }
+  .p-img.contain img { object-fit: contain; padding: .8rem; }
+  .project-card:hover .p-img img { transform: scale(1.06); }
+  .p-img .p-count { position: absolute; right: .6rem; bottom: .6rem; background: rgba(0,0,0,.7); color: #fff;
+    font-size: .72rem; padding: .15rem .5rem; letter-spacing: .05em; }
+  .p-featured { position: absolute; left: .6rem; top: .6rem; background: var(--gold); color: #111; font-size: .68rem;
+    font-weight: 700; letter-spacing: .12em; text-transform: uppercase; padding: .2rem .55rem; z-index: 1; }
+
   /* ── MODAL ── */
   .modal { position: fixed; inset: 0; z-index: 2000; display: grid; place-items: center; padding: 1rem;
     background: rgba(0,0,0,.7); backdrop-filter: blur(6px); opacity: 0; pointer-events: none; transition: opacity .3s; }
@@ -242,6 +252,23 @@
   .modal-box ul { list-style: none; margin-bottom: 1.2rem; }
   .modal-box li { color: var(--text-dim); padding: .35rem 0 .35rem 1.3rem; position: relative; line-height: 1.5; }
   .modal-box li::before { content: '▸'; position: absolute; left: 0; color: var(--gold); }
+  .m-gallery { margin: -2.4rem -2.4rem 1.6rem; background: var(--surface2); border-bottom: 1px solid var(--line); }
+  .m-main { width: 100%; aspect-ratio: 16/8.5; object-fit: contain; display: block; cursor: zoom-in; background: #0b0b0b; }
+  .m-thumbs { display: flex; gap: .5rem; padding: .6rem; overflow-x: auto; }
+  .m-thumbs img { width: 84px; height: 50px; object-fit: cover; cursor: pointer; opacity: .55; border: 1px solid transparent; transition: all .25s; }
+  .m-thumbs img.on, .m-thumbs img:hover { opacity: 1; border-color: var(--gold); }
+  .m-links { display: flex; gap: .6rem; flex-wrap: wrap; }
+  .lightbox { position: fixed; inset: 0; z-index: 4000; background: rgba(0,0,0,.92); display: grid; place-items: center;
+    padding: 2rem; opacity: 0; pointer-events: none; transition: opacity .3s; cursor: zoom-out; }
+  .lightbox.open { opacity: 1; pointer-events: auto; }
+  .lightbox img { max-width: 100%; max-height: 88vh; object-fit: contain; box-shadow: 0 30px 80px rgba(0,0,0,.6); }
+  .lightbox .icon-btn { position: absolute; top: 1rem; right: 1rem; background: #111; }
+  .doc-links { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1rem; }
+  .doc-link { display: inline-flex; align-items: center; gap: .4rem; padding: .45rem .9rem; font-size: .8rem; font-weight: 600;
+    letter-spacing: .08em; text-transform: uppercase; color: var(--gold); border: 1px solid var(--line-strong);
+    text-decoration: none; transition: background .25s; }
+  .doc-link:hover { background: color-mix(in srgb, var(--gold) 12%, transparent); }
+  .cert-thumb { width: 64px; height: 48px; object-fit: cover; object-position: top; border: 1px solid var(--line); flex-shrink: 0; cursor: zoom-in; }
   .modal-nav { display: flex; justify-content: space-between; gap: 1rem; margin-top: 1.6rem; padding-top: 1.2rem;
     border-top: 1px solid var(--line); flex-wrap: wrap; }
 
@@ -367,14 +394,14 @@
     <div class="hero-socials">
       <a href="https://github.com/Rached12364" target="_blank" rel="noopener">GitHub</a>
       <a href="https://www.linkedin.com/in/rached-ilahi-5b5101366/" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="presentation_ctteera.html" target="_blank" rel="noopener">Soutenance de stage</a>
       <a href="#terminal">Terminal ›_</a>
     </div>
   </div>
   <div class="hero-photo">
     <div class="photo-frame" id="photoFrame">
       <span class="corner tl"></span><span class="corner tr"></span><span class="corner bl"></span><span class="corner br"></span>
-      <!-- Remplace "photo.png" par le nom de ta photo dans le dépôt -->
-      <img src="photo.png" alt="Rached ILAHI" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
+            <img src="photo.png" alt="Rached ILAHI" onerror="this.style.display='none';this.nextElementSibling.style.display='grid';">
       <div class="photo-fallback">RI</div>
     </div>
   </div>
@@ -393,7 +420,7 @@
       <p>Élève ingénieur en <strong>3<sup>e</sup> année de génie informatique</strong> à l'<strong>École Nationale d'Ingénieurs de Carthage (ENICarthage)</strong>, je recherche un <strong>stage de fin d'études (PFE) pour 2027</strong>.</p>
       <p>Mes projets couvrent le développement Full-Stack (Angular, React, Spring Boot), les systèmes distribués, la haute disponibilité, la blockchain et l'intégration de modules d'IA. J'aime transformer un besoin concret en une solution qui fonctionne, de l'API jusqu'à l'interface.</p>
       <div class="stats-row" id="stats">
-        <div class="stat-box"><div class="stat-number" data-count="8" data-suffix="">0</div><div class="stat-label">Projets</div></div>
+        <div class="stat-box"><div class="stat-number" data-count="9" data-suffix="">0</div><div class="stat-label">Projets</div></div>
         <div class="stat-box"><div class="stat-number" data-count="2" data-suffix="">0</div><div class="stat-label">Stages</div></div>
         <div class="stat-box"><div class="stat-number" data-count="2" data-suffix="">0</div><div class="stat-label">Certifications</div></div>
         <div class="stat-box"><div class="stat-number" data-count="3" data-suffix="">0</div><div class="stat-label">Langues</div></div>
@@ -473,7 +500,7 @@
   <h2 class="section-title">Certifications</h2>
   <div class="cards-grid reveal">
     <a class="info-card" href="https://www.credly.com/badges/0bdf6e15-2916-4402-8916-c9622678b49f/public_url" target="_blank" rel="noopener">
-      <div class="info-icon">🌐</div>
+      <img class="cert-thumb" src="images/ccna.jpg" alt="Certificat CCNA SRWE" data-zoom="images/ccna.jpg">
       <div><div class="info-name">CCNA : Switching, Routing &amp; Wireless Essentials</div><div class="info-sub">Juin 2026 · Cisco Networking Academy</div></div>
       <span class="info-arrow">↗</span>
     </a>
@@ -547,7 +574,8 @@
 <!-- MODAL -->
 <div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
   <div class="modal-box">
-    <button class="icon-btn modal-close" id="mClose" aria-label="Fermer">✕</button>
+    <button class="icon-btn modal-close" id="mClose" aria-label="Fermer" style="z-index:2">✕</button>
+    <div class="m-gallery" id="mGallery"><img class="m-main" id="mMain" alt=""><div class="m-thumbs" id="mThumbs"></div></div>
     <div class="p-date" id="mDate"></div>
     <h3 id="mTitle"></h3>
     <p id="mDesc"></p>
@@ -555,73 +583,81 @@
     <div class="tags" id="mTags"></div>
     <div class="modal-nav">
       <button class="btn btn-secondary" id="mPrev">← Précédent</button>
-      <a class="btn btn-primary" id="mLink" target="_blank" rel="noopener">Voir le code ↗</a>
+      <div class="m-links" id="mLinks"></div>
       <button class="btn btn-secondary" id="mNext">Suivant →</button>
     </div>
   </div>
 </div>
 
+<div class="lightbox" id="lightbox"><button class="icon-btn" aria-label="Fermer">✕</button><img id="lbImg" alt=""></div>
 <div class="toast" id="toast"></div>
 <button class="icon-btn to-top" id="toTop" aria-label="Remonter en haut">↑</button>
 
 <script>
 /* ═══════════════ DONNÉES ═══════════════ */
 const PROJECTS = [
-  { id: 'infra', name: 'Infra Monitoring — Supervision d\'infrastructure', date: '2026 — Présent', cats: ['infra','web'],
+  { id: 'ctteera', featured: true, imgs: ['images/ctteera-1.jpg','images/ctteera-2.jpg','images/ctteera-3.jpg','images/ctteera-4.jpg'],
+    name: 'CTTEERA — Plateforme de mise en réseau (stage MSD)', date: 'Été 2026', cats: ['web','ia'],
+    desc: 'Plateforme web qui réunit les techniciens, entreprises, centres de formation, bénéficiaires et experts de la Coopérative Tunisienne des Techniciens en Électricité et Énergie Renouvelable.',
+    points: ['Espaces professionnels par profil, annuaires juridique et médical avec filtres par gouvernorat', 'Gestion des réclamations avec résumé automatique par IA', 'Messagerie avec les experts (texte, vocal, fichiers) et notifications', 'Actualités, événements et panneau d\'administration', 'Sécurité : JWT, Spring Security, mots de passe hachés BCrypt, CORS, validation côté serveur', 'Architecture 3-tiers MVC, méthode Scrum, 21/21 cas de tests réussis (JUnit, Postman)'],
+    tech: ['React','TypeScript','Spring Boot','Spring Security','JWT','WebSockets','PostgreSQL','IA'],
+    links: [{ url: 'presentation_ctteera.html', label: 'Présentation' }, { url: 'rapport_de_stage_Rached_ILAHI.pdf', label: 'Rapport de stage' }] },
+  { id: 'infra', imgs: ['images/infra.png'], name: 'Infra Monitoring — Supervision d\'infrastructure', date: '2026 — Présent', cats: ['infra','web'],
     desc: 'Plateforme de supervision : un agent collecte les métriques système, les stocke dans une base temporelle et les affiche en temps réel sur un tableau de bord interactif.',
     points: ['Agent de collecte des métriques CPU, RAM, disque et réseau', 'Stockage des séries temporelles dans InfluxDB', 'API REST FastAPI et diffusion temps réel par WebSockets', 'Tableau de bord interactif avec Chart.js', 'Déploiement conteneurisé (Docker) et CI/CD avec GitHub Actions'],
     tech: ['Python','FastAPI','InfluxDB','Docker','WebSockets','Chart.js','GitHub Actions'],
-    link: 'https://github.com/Rached12364/infra-monitoring-', linkLabel: 'Voir le code' },
-  { id: 'certchain', name: 'CertChain — Diplômes sur la blockchain', date: 'Juillet 2026', cats: ['blockchain','web'],
+    links: [{ url: 'https://github.com/Rached12364/infra-monitoring-', label: 'Voir le code' }] },
+  { id: 'certchain', imgs: ['images/certchain.jpg'], name: 'CertChain — Diplômes sur la blockchain', date: 'Juillet 2026', cats: ['blockchain','web'],
     desc: 'dApp d\'émission et de vérification de diplômes infalsifiables grâce à des smart contracts déployés sur Ethereum.',
     points: ['Smart contracts Solidity déployés sur le réseau de test Sepolia', 'Vérification publique de l\'authenticité d\'un diplôme', 'Backend Spring Boot avec authentification JWT', 'Interface React connectée au portefeuille via Web3'],
     tech: ['Solidity','Ethereum','Spring Boot','React','PostgreSQL','JWT','Web3'],
-    link: 'https://www.linkedin.com/feed/update/urn:li:activity:7477109868982747136/', linkLabel: 'Voir la présentation' },
-  { id: 'edukini', name: 'EDUKINI — Système intelligent d\'orientation', date: 'Janvier 2026', cats: ['ia','web'],
+    links: [{ url: 'https://www.linkedin.com/feed/update/urn:li:activity:7477109868982747136/', label: 'Voir la présentation' }] },
+  { id: 'edukini', imgs: ['images/edukini.jpg'], name: 'EDUKINI — Système intelligent d\'orientation', date: 'Janvier 2026', cats: ['ia','web'],
     desc: 'Plateforme web dotée d\'un moteur de recommandation IA qui analyse les profils académiques des étudiants ingénieurs et propose des filières adaptées.',
     points: ['Moteur de recommandation basé sur les profils académiques', 'API sécurisée avec Spring Security et JWT', 'Interface Angular', 'Déploiement avec Docker'],
     tech: ['Angular','Spring Boot','Spring Security','JWT','MySQL','Docker','IA'],
-    link: 'https://github.com/Nihed27/EDUKINI', linkLabel: 'Voir le code' },
-  { id: 'borsatn', name: 'BorsaTn — Haute disponibilité Odoo 17', date: 'Décembre 2025', cats: ['infra'],
+    links: [{ url: 'https://github.com/Nihed27/EDUKINI', label: 'Voir le code' }] },
+  { id: 'borsatn', imgs: ['images/borsatn.jpg'], name: 'BorsaTn — Haute disponibilité Odoo 17', date: 'Décembre 2025', cats: ['infra'],
     desc: 'Infrastructure haute disponibilité pour l\'ERP Odoo 17, conçue pour continuer à fonctionner même en cas de panne d\'un serveur.',
     points: ['Répartition de charge avec HAProxy', 'Failover automatique avec Keepalived (IP virtuelle)', 'Réplication PostgreSQL', 'Stockage partagé NFS', 'Machines RHEL virtualisées sous VMware'],
     tech: ['RHEL','Docker','HAProxy','Keepalived','PostgreSQL','VMware'],
-    link: 'https://github.com/Rached12364/-Infrastructure-Haute-Disponibilit-e-Odoo-17-BorsaTn-', linkLabel: 'Voir le code' },
-  { id: 'quantum', name: 'QUANTUM TWIN — Messagerie distribuée', date: 'Oct. — Déc. 2025', cats: ['systemes','ia'],
+    links: [{ url: 'https://github.com/Rached12364/-Infrastructure-Haute-Disponibilit-e-Odoo-17-BorsaTn-', label: 'Voir le code' }] },
+  { id: 'quantum', imgs: ['images/quantum.jpg'], name: 'QUANTUM TWIN — Messagerie distribuée', date: 'Oct. — Déc. 2025', cats: ['systemes','ia'],
     desc: 'Messagerie distribuée temps réel en architecture client-serveur multi-clients, avec synchronisation de jumeaux numériques.',
     points: ['Communication TCP/IP et WebSocket', 'Concurrence gérée par multi-threading et mutex', 'Synchronisation de jumeaux numériques entre clients', 'Exposition du service via Cloudflare', 'Module IA de traduction automatique et de détection d\'anomalies'],
     tech: ['C','Python','TCP/IP','WebSockets','Multi-threading','Cloudflare','IA'],
-    link: 'https://github.com/nourbentaher/quantum_twin/tree/main/version_finale', linkLabel: 'Voir le code' },
-  { id: 'delivtrack', name: 'DelivTrack — App mobile de livraisons', date: 'Oct. 2025 — Janv. 2026', cats: ['mobile'],
+    links: [{ url: 'https://github.com/nourbentaher/quantum_twin/tree/main/version_finale', label: 'Voir le code' }] },
+  { id: 'delivtrack', contain: true, imgs: ['images/delivtrack.jpg'], name: 'DelivTrack — App mobile de livraisons', date: 'Oct. 2025 — Janv. 2026', cats: ['mobile'],
     desc: 'Application Android de supervision des livraisons en temps réel, pensée pour fonctionner même sans connexion.',
     points: ['Architecture 3 tiers', 'Mode offline-first avec base locale SQLite', 'Communication avec l\'API Spring Boot via Retrofit', 'Suivi des livraisons en temps réel'],
     tech: ['Java','Android','SQLite','Retrofit','Spring Boot'],
-    link: 'https://github.com/Rached12364/DelivTrack-Application-mobile-de-supervision-des-livraisons-', linkLabel: 'Voir le code' },
+    links: [{ url: 'https://github.com/Rached12364/DelivTrack-Application-mobile-de-supervision-des-livraisons-', label: 'Voir le code' }] },
   { id: 'dentaire', name: 'Cabinet dentaire — Gestion & IA radiographique', date: 'Septembre 2025', cats: ['ia'],
     desc: 'Application de bureau pour la gestion d\'un cabinet dentaire, avec un module IA d\'analyse des radiographies.',
     points: ['Gestion des rendez-vous et des dossiers patients', 'Interface JavaFX', 'Module IA d\'analyse d\'images radiographiques dentaires'],
     tech: ['Java','JavaFX','SQL','IA'],
-    link: 'https://github.com/Rached12364/Application-de-Gestion-d-un-Cabinet-Dentaire-', linkLabel: 'Voir le code' },
+    links: [{ url: 'https://github.com/Rached12364/Application-de-Gestion-d-un-Cabinet-Dentaire-', label: 'Voir le code' }] },
   { id: 'pieces', name: 'Site web de pièces détachées', date: 'Mai 2025', cats: ['web'],
     desc: 'Site web responsive pour la vente de pièces détachées, avec pages produit et panier.',
     points: ['Pages produit et panier', 'Interface responsive'],
-    tech: ['HTML5','CSS3','JavaScript'], link: null }
+    tech: ['HTML5','CSS3','JavaScript'], links: [] }
 ];
 
 const CATS = { all: 'Tous', web: 'Web', ia: 'IA', blockchain: 'Blockchain', infra: 'Infra & DevOps', mobile: 'Mobile', systemes: 'Systèmes' };
 
 const SKILLS = {
-  'Langages': ['Java','Python','JavaScript','TypeScript','C','C++','SQL','Solidity'],
-  'Frontend': ['Angular','React','HTML5','CSS3','Chart.js'],
-  'Backend': ['Spring Boot','Spring Security','FastAPI','JWT','WebSockets'],
+  'Langages': ['Java','Python','JavaScript','C','C++','SQL','Solidity'],
+  'Frontend': ['React','Angular','TypeScript','HTML5','CSS3','Chart.js'],
+  'Backend': ['Spring Boot','Spring Security','Spring Data JPA','FastAPI','JWT','WebSockets'],
   'Données & IA': ['PostgreSQL','MySQL','InfluxDB','SQLite','IA'],
-  'Infra & Outils': ['Docker','GitHub Actions','Linux','RHEL','HAProxy','Keepalived','VMware','Git']
+  'Infra & Outils': ['Docker','GitHub Actions','Linux','RHEL','HAProxy','Keepalived','VMware','Git','JUnit','Postman','Scrum']
 };
 
 const EXP = [
-  { date: 'Été 2026', title: 'Stage — Développeur Full-Stack', org: 'Mondial Security Distribution (MSD)',
-    desc: 'Conception et développement d\'une plateforme web de mise en relation entre techniciens certifiés et entreprises : authentification JWT avec gestion des rôles, création et suivi des interventions, API REST Spring Boot, interface Angular 18, intégration d\'un module d\'IA et connexion à un ERP.',
-    tech: ['Spring Boot','Angular 18','TypeScript','PostgreSQL','JWT','IA','ERP'] },
+  { date: 'Été 2026', title: 'Stage — Développeur Full-Stack', org: 'Mondial Security Distribution (MSD) · Nabeul',
+    desc: 'Conception et développement de CTTEERA, une plateforme web de digitalisation et de mise en réseau pour une coopérative de techniciens en électricité et énergie renouvelable : espaces professionnels, annuaires d\'experts, réclamations avec assistance IA, messagerie et administration. Architecture 3-tiers, méthode Scrum, 21/21 tests réussis.',
+    tech: ['React','TypeScript','Spring Boot','Spring Security','JWT','WebSockets','PostgreSQL','IA'],
+    docs: [{ url: 'presentation_ctteera.html', label: '▶ Présentation' }, { url: 'rapport_de_stage_Rached_ILAHI.pdf', label: '⬇ Rapport de stage' }] },
   { date: 'Janvier 2026', title: 'Hackathon IA', org: 'Compétition en équipe',
     desc: 'Analyse du problème, préparation des données, entraînement et évaluation d\'un modèle de machine learning, puis présentation de la solution devant le jury.',
     tech: ['Python','Machine Learning','Git'] },
@@ -643,7 +679,7 @@ const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const esc = s => String(s).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const norm = s => s.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
-const techMatch = (t, skill) => norm(t).startsWith(norm(skill)) || norm(skill).startsWith(norm(t));
+const techMatch = (t, skill) => { const a = norm(t), b = norm(skill); return a === b || a.startsWith(b + ' ') || b.startsWith(a + ' '); };
 const toast = msg => { const t = $('#toast'); t.textContent = msg; t.classList.add('show'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('show'), 2200); };
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 $('#year').textContent = new Date().getFullYear();
@@ -695,13 +731,14 @@ function renderTL(list, el) {
       <div class="tl-org">${esc(x.org)}</div>
       <div class="tl-body"><div class="tl-desc">${esc(x.desc)}</div>
         ${x.tech ? `<div class="tags">${x.tech.map(t => `<span class="tag">${esc(t)}</span>`).join('')}</div>` : ''}
+        ${x.docs ? `<div class="doc-links">${x.docs.map(d => `<a class="doc-link" href="${d.url}" target="_blank" rel="noopener">${esc(d.label)}</a>`).join('')}</div>` : ''}
       </div>
     </div>`).join('');
 }
 renderTL(EXP, $('#expList')); renderTL(EDU, $('#eduList'));
 $$('.tl-item').forEach(it => {
   const tog = () => { it.classList.toggle('open'); it.setAttribute('aria-expanded', it.classList.contains('open')); };
-  it.onclick = tog; it.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } };
+  it.onclick = e => { if (!e.target.closest('a')) tog(); }; it.onkeydown = e => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); tog(); } };
 });
 
 /* ═══════════════ PROJETS ═══════════════ */
@@ -712,6 +749,7 @@ $('#filters').innerHTML = Object.entries(CATS).map(([k, v]) => {
 }).join('');
 $('#projectsGrid').innerHTML = PROJECTS.map((p, i) => `
   <article class="project-card reveal" data-i="${i}" tabindex="0" aria-label="${esc(p.name)}">
+    ${p.imgs ? `<div class="p-img${p.contain ? ' contain' : ''}">${p.featured ? '<span class="p-featured">★ Stage</span>' : ''}<img src="${p.imgs[0]}" alt="Aperçu ${esc(p.name)}" loading="lazy" onerror="this.parentElement.remove()">${p.imgs.length > 1 ? `<span class="p-count">${p.imgs.length} captures</span>` : ''}</div>` : ''}
     <div class="p-top"><div class="p-num">${String(i + 1).padStart(2, '0')}</div><span class="p-cat">${CATS[p.cats[0]]}</span></div>
     <div class="p-date">${p.date}</div>
     <h3 class="p-name">${esc(p.name)}</h3>
@@ -776,11 +814,22 @@ function openModal(i) {
   $('#mDesc').textContent = p.desc;
   $('#mPoints').innerHTML = p.points.map(x => `<li>${esc(x)}</li>`).join('');
   $('#mTags').innerHTML = p.tech.map(t => `<span class="tag">${esc(t)}</span>`).join('');
-  const l = $('#mLink');
-  if (p.link) { l.href = p.link; l.textContent = p.linkLabel + ' ↗'; l.style.display = ''; } else l.style.display = 'none';
+  $('#mLinks').innerHTML = (p.links || []).map((l, k) => `<a class="btn ${k ? 'btn-secondary' : 'btn-primary'}" href="${l.url}" target="_blank" rel="noopener">${esc(l.label)} ↗</a>`).join('');
+  const g = $('#mGallery');
+  if (p.imgs && p.imgs.length) {
+    g.style.display = ''; $('#mMain').src = p.imgs[0]; $('#mMain').alt = p.name; $('#mMain').onerror = () => { g.style.display = 'none'; };
+    $('#mThumbs').style.display = p.imgs.length > 1 ? '' : 'none';
+    $('#mThumbs').innerHTML = p.imgs.map((src, k) => `<img src="${src}" alt="Capture ${k + 1}" class="${k ? '' : 'on'}">`).join('');
+    $$('#mThumbs img').forEach(t => t.onclick = () => { $('#mMain').src = t.getAttribute('src'); $$('#mThumbs img').forEach(x => x.classList.toggle('on', x === t)); });
+  } else g.style.display = 'none';
   $('#modal').classList.add('open'); document.body.style.overflow = 'hidden';
   $('#mClose').focus();
 }
+function openLightbox(src) { $('#lbImg').src = src; $('#lightbox').classList.add('open'); }
+function closeLightbox() { $('#lightbox').classList.remove('open'); }
+$('#lightbox').onclick = closeLightbox;
+$('#mMain').onclick = () => openLightbox($('#mMain').getAttribute('src'));
+$$('[data-zoom]').forEach(im => im.onclick = e => { e.preventDefault(); e.stopPropagation(); openLightbox(im.dataset.zoom); });
 function closeModal() { $('#modal').classList.remove('open'); document.body.style.overflow = ''; }
 function step(d) { const v = visibleIdx(); if (!v.length) return; const k = v.indexOf(current); openModal(v[(k + d + v.length) % v.length]); }
 $('#mClose').onclick = closeModal;
@@ -788,7 +837,8 @@ $('#modal').onclick = e => { if (e.target.id === 'modal') closeModal(); };
 $('#mPrev').onclick = () => step(-1); $('#mNext').onclick = () => step(1);
 document.addEventListener('keydown', e => {
   const typing = ['INPUT', 'TEXTAREA'].includes(document.activeElement.tagName);
-  if ($('#modal').classList.contains('open')) {
+  if ($('#lightbox').classList.contains('open')) { if (e.key === 'Escape') closeLightbox(); }
+  else if ($('#modal').classList.contains('open')) {
     if (e.key === 'Escape') closeModal();
     if (e.key === 'ArrowRight') step(1);
     if (e.key === 'ArrowLeft') step(-1);
@@ -810,6 +860,7 @@ const CMDS = {
   <span class="p">exp</span>         mes expériences
   <span class="p">contact</span>     mes coordonnées
   <span class="p">cv</span>          télécharger mon CV
+  <span class="p">stage</span>       présentation et rapport de stage
   <span class="p">theme</span>       changer de thème
   <span class="p">clear</span>       effacer l'écran`),
   whoami: () => print(`Rached ILAHI — élève ingénieur en génie informatique (ENICarthage).
@@ -825,8 +876,11 @@ github   <a href="https://github.com/Rached12364" target="_blank" rel="noopener"
   cv: () => { print('<span class="ok">Téléchargement du CV…</span>'); const a = document.createElement('a'); a.href = 'CV_Rached_ILAHI.pdf'; a.download = ''; a.click(); },
   theme: () => { setTheme(root.dataset.theme === 'light' ? 'dark' : 'light'); print(`Thème : ${root.dataset.theme}`, 'ok'); },
   clear: () => { out.innerHTML = ''; },
+  stage: () => print(`Stage MSD — projet CTTEERA (été 2026)
+  présentation  <a href="presentation_ctteera.html" target="_blank" rel="noopener">presentation_ctteera.html</a>
+  rapport       <a href="rapport_de_stage_Rached_ILAHI.pdf" target="_blank" rel="noopener">rapport_de_stage_Rached_ILAHI.pdf</a>`),
   sudo: () => print('Bien essayé 😄 Mais il faudra d\'abord me proposer un PFE.', 'err'),
-  ls: () => print('about/  experience/  projects/  contact/  CV_Rached_ILAHI.pdf')
+  ls: () => print('about/  experience/  projects/  contact/  CV_Rached_ILAHI.pdf  rapport_de_stage_Rached_ILAHI.pdf  presentation_ctteera.html')
 };
 function run(raw) {
   const line = raw.trim(); print(`<span class="p">rached@portfolio:~$</span> ${esc(line)}`);
@@ -939,4 +993,3 @@ if (matchMedia('(pointer: fine)').matches) {
 </script>
 </body>
 </html>
-
